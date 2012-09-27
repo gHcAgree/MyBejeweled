@@ -4,17 +4,20 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Canvas;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
 
 public class BaseView {
 	protected Canvas canvas;
 	protected Image background;
 	protected GC gc;
+	protected MainFrame mainFrame;
 	
-	public BaseView(Display d,Shell sh) {
-		canvas = new Canvas(sh,SWT.BORDER);
+	public BaseView(MainFrame mf) {
+		mainFrame = mf;
+		canvas = new Canvas(mf.getShell(),SWT.BORDER);
 		setSize(MainFrame.WIDTH,MainFrame.HEIGHT);
+		
+		paintComponents();
+		addListeners();
 	}
 	
 	public void setBackground(Image img) {
@@ -26,7 +29,11 @@ public class BaseView {
 			canvas.setBounds(0,0,w,h);
 	}
 	
-	public void paintSelf() {
+	public void paintComponents() {
+		
+	}
+	
+	public void addListeners() {
 		
 	}
 }

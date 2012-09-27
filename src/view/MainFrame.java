@@ -24,7 +24,7 @@ public class MainFrame {
 		shell.setSize(WIDTH,HEIGHT);
 		shell.open();
 		
-		view = new MenuView(display,shell);
+		view = new MenuView(this);
 		
 		while (!shell.isDisposed()) {
 		    if (!display.readAndDispatch()) 
