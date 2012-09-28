@@ -28,12 +28,6 @@ public class ClassicView extends BaseView {
 				gc.drawImage(new Image(mainFrame.getDisplay(),MyImages.DIR+MyImages.HINTBG), 685, 420);
 				gc.drawImage(new Image(mainFrame.getDisplay(),MyImages.DIR+MyImages.HINT), 701, 491);
 				
-				gc.setFont(new Font(mainFrame.getDisplay(),"Segoe Print",25,SWT.NORMAL));
-				gc.setAlpha(180);
-				gc.setForeground(new Color(mainFrame.getDisplay(),255,255,255));
-				
-				gc.drawString("0",738,52,true);
-				
 				gc.setFont(new Font(mainFrame.getDisplay(),"Segoe Print",15,SWT.NORMAL));
 				gc.setAlpha(180);
 				gc.setForeground(new Color(mainFrame.getDisplay(),255,255,255));
