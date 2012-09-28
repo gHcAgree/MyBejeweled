@@ -14,7 +14,7 @@ public class Game {
 	}
 	
 	public void over() {
-		
+		System.exit(0);
 	}
 	
 	public static void main(String[] args) {

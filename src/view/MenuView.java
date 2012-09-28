@@ -4,7 +4,9 @@ import model.MyImages;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;
+import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Cursor;
+import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
@@ -33,15 +35,10 @@ public class MenuView extends BaseView {
 		exitRect = new Rectangle(726,604,140,60);
 		
 		classicP = new Point(221,148);
-		timeP = new Point(633,148);
+		timeP = new Point(660,148);
 		levelP = new Point(221,468);
-		onlineP = new Point(633,468);
+		onlineP = new Point(660,468);
 		radius = 90;
-	}
-	
-	@Override
-	public void paintComponents() {
-		
 	}
 	
 	@Override
@@ -54,28 +51,103 @@ public class MenuView extends BaseView {
 				int x = e.x;
 				int y = e.y;
 				
+				gc.setFont(new Font(mainFrame.getDisplay(),"楷体",40,SWT.BOLD));
+				gc.setAlpha(50);
+				gc.setForeground(new Color(mainFrame.getDisplay(),255,255,255));
+				
+				if(settingRect.contains(x,y)) {
+					gc.drawString("设置选项", 342, 285,true);
+					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+				}
+				else if(helpRect.contains(x,y)) {
+					gc.drawString("帮助信息", 342, 285,true);
+					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+				}
+				else if(aboutRect.contains(x,y)) {
+					gc.drawString("关于游戏", 342, 285,true);
+					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+				}
+				else if(exitRect.contains(x,y)) {
+					gc.drawString("退出游戏", 342, 285,true);
+					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+				}
+				   
+				else if(onButton(classicP,x,y)) {
+					gc.drawString("经典模式", 342, 285,true);
+					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+				}
+				else if(onButton(timeP,x,y)) {
+					gc.drawString("时间模式", 342, 285,true);
+					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+				}
+				else if(onButton(levelP,x,y)) {
+					gc.drawString("冒险闯关", 342, 285,true);
+					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+				}
+				else if(onButton(onlineP,x,y)) {
+					gc.drawString("联网对战", 342, 285,true);
+					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+				}
+				else {
+					canvas.redraw();
+					mainFrame.getShell().setCursor(null);
+				}
+					
+			}
+			
+		});
+		
+		canvas.addMouseListener(new MouseListener() {
+
+			@Override
+			public void mouseDoubleClick(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void mouseDown(MouseEvent e) {
+				// TODO Auto-generated method stub
+				int x = e.x;
+				int y = e.y;
+				
 				if(settingRect.contains(x,y)) {
 					
 				}
 				else if(helpRect.contains(x,y)) {
 					
 				}
-				else if(aboutRect.contains(x,y) {
+				else if(aboutRect.contains(x,y)) {
 					
 				}
 				else if(exitRect.contains(x,y)) {
+					mainFrame.getGame().over();
+				}
+				   
+				else if(onButton(classicP,x,y)) {
+					canvas.dispose();
+					mainFrame.getShell().setCursor(null);
+					mainFrame.setView(new ClassicView(mainFrame));
+				}
+				else if(onButton(timeP,x,y)) {
+					canvas.dispose();
+					mainFrame.getShell().setCursor(null);
+					mainFrame.setView(new TimeView(mainFrame));
+				}
+				else if(onButton(levelP,x,y)) {
 					
 				}
-				   onButton(classicP,x,y)
-				   onButton(timeP,x,y)
-				   onButton(levelP,x,y)
-				   onButton(onlineP,x,y)) {
-					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+				else if(onButton(onlineP,x,y)) {
+					
 				}
 				else {
-					mainFrame.getShell().setCursor(null);
 				}
-					
+			}
+
+			@Override
+			public void mouseUp(MouseEvent arg0) {
+				// TODO Auto-generated method stub
+				
 			}
 			
 		});

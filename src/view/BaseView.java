@@ -13,8 +13,9 @@ public class BaseView {
 	
 	public BaseView(MainFrame mf) {
 		mainFrame = mf;
-		canvas = new Canvas(mf.getShell(),SWT.BORDER);
+		canvas = new Canvas(mf.getShell(),SWT.FILL);
 		setSize(MainFrame.WIDTH,MainFrame.HEIGHT);
+		gc = new GC(canvas);
 		
 		paintComponents();
 		addListeners();
