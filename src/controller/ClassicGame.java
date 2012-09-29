@@ -12,11 +12,9 @@ public class ClassicGame extends Game {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		int k=0;
 		while(view.getGameThread()!=null) {
-			k = (++k)%20;
-			view.paintMatrix(k);
-			view.paintScore();
+			//view.paintMatrix();
+			//view.paintScore();
 			try {
 				Thread.sleep(5);
 			} catch (InterruptedException e) {

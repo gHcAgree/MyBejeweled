@@ -53,6 +53,8 @@ public class ClassicView extends BaseView {
 				gc.drawString("Hint",710,510,true);
 				
 				gc.drawImage(new Image(mainFrame.getDisplay(),MyImages.DIR+MyImages.BACKTOMENU), 740, 600);
+				
+				paintMatrix();
 
 			}
 			
@@ -113,18 +115,13 @@ public class ClassicView extends BaseView {
 		});
 	}
 	
-	public void paintMatrix(int k) {		
+	public void paintMatrix() {		
 		int[][] matrix = game.getMatrix();
 		
 		for(int i=0;i<Game.SIZE;i++) {
 			for(int j=0;j<Game.SIZE;j++) {
 				try {
-					if(rotateDiamond!=i*Game.SIZE+j)
-						gc.drawImage(new Image(mainFrame.getDisplay(),DIAMONDS.ICONS[matrix[i][j]-1][0]),70+j*64,70+i*64);
-					else{
-						System.out.println(k);
-						gc.drawImage(new Image(mainFrame.getDisplay(),DIAMONDS.ICONS[matrix[i][j]-1][k]),70+j*64,70+i*64);
-					}
+					gc.drawImage(new Image(mainFrame.getDisplay(),DIAMONDS.ICONS[matrix[i][j]-1][0]),70+j*64,70+i*64);
 				} catch (SWTException e) {
 					System.out.println("Game terminated!");
 					System.exit(0);
@@ -143,11 +140,10 @@ public class ClassicView extends BaseView {
 	}
 	
 	protected int onDiamondN(int x,int y) {
-		if(x<70||x>582||y<70||y>582) return -1;
-		else {
-			System.out.println(((y-70)/64)*(Game.SIZE)+(x-70)/64);
+		if(x<70||x>582||y<70||y>582) 
+			return -1;
+		else 
 			return ((y-70)/64)*(Game.SIZE)+(x-70)/64;
-		}
 	}
 
 }
