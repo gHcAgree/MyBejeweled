@@ -7,5 +7,7 @@ public class TimeView extends ClassicView {
 		// TODO Auto-generated constructor stub
 	}
 	
-	
+	public void paintProcessbar() {
+		
+	}
 }

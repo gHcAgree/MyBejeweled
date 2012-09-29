@@ -1,24 +1,35 @@
 package view;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.events.*;
 
+import controller.Game;
+
 import resources.MyImages;
 
 public class ClassicView extends BaseView {
+	
+	protected boolean[] onDiamond;
+	protected int rotateDiamond;
 
 	public ClassicView(MainFrame mf) {
 		super(mf);
 		setBackground(new Image(mf.getDisplay(),MyImages.DIR+MyImages.HELPBG));
+		
+		int number = Game.SIZE*Game.SIZE-1;
+		onDiamond = new boolean[number];
+		for(int i=0;i<number;i++)
+				onDiamond[i] = false;
+		
+		rotateDiamond = -1;
 	}
 	
 	@Override
-	public void paintComponents() {
-		super.paintComponents();
-		
+	public void paintComponents() {	
 		canvas.addPaintListener(new PaintListener() {
 
 			@Override
@@ -62,6 +73,12 @@ public class ClassicView extends BaseView {
 					changeCursor(true);
 				else
 					changeCursor(false);
+				
+				int index = -1;
+				if((index=onDiamondN(x,y))!=-1)
+					rotateDiamond = index;
+				else
+					rotateDiamond = -1;
 			}
 			
 		});
@@ -94,6 +111,43 @@ public class ClassicView extends BaseView {
 			}
 			
 		});
+	}
+	
+	public void paintMatrix(int k) {		
+		int[][] matrix = game.getMatrix();
+		
+		for(int i=0;i<Game.SIZE;i++) {
+			for(int j=0;j<Game.SIZE;j++) {
+				try {
+					if(rotateDiamond!=i*Game.SIZE+j)
+						gc.drawImage(new Image(mainFrame.getDisplay(),DIAMONDS.ICONS[matrix[i][j]-1][0]),70+j*64,70+i*64);
+					else{
+						System.out.println(k);
+						gc.drawImage(new Image(mainFrame.getDisplay(),DIAMONDS.ICONS[matrix[i][j]-1][k]),70+j*64,70+i*64);
+					}
+				} catch (SWTException e) {
+					System.out.println("Game terminated!");
+					System.exit(0);
+				}
+			}
+		}
+	}
+	
+	public void paintScore() {
+		gc.setFont(new Font(mainFrame.getDisplay(),"Segoe Print",25,SWT.ITALIC));
+		gc.setAlpha(180);
+		gc.setForeground(new Color(mainFrame.getDisplay(),255,255,255));
+		
+		String score = game.getRecord().getScore()+"";
+		gc.drawString(score,738,52,true);
+	}
+	
+	protected int onDiamondN(int x,int y) {
+		if(x<70||x>582||y<70||y>582) return -1;
+		else {
+			System.out.println(((y-70)/64)*(Game.SIZE)+(x-70)/64);
+			return ((y-70)/64)*(Game.SIZE)+(x-70)/64;
+		}
 	}
 
 }

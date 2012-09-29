@@ -3,19 +3,18 @@ package controller;
 import java.util.Random;
 
 import model.Record;
-import view.BaseView;
-import view.MainFrame;
+import view.ClassicView;
 
 public class Game implements Runnable {
-	private MainFrame frame;
-	private Record record;
-	private int[][] matrix;
+	protected Record record;
+	protected int[][] matrix;
 	public static final int TIMELIMIT = 60*1000;
 	public static final int SIZE = 8;
 	
-	protected BaseView view;
+	protected ClassicView view;
 	
-	public Game() {
+	public Game(ClassicView v) {
+		view = v;
 		record = new Record();
 		matrix = makeMatrix();
 	}
@@ -60,15 +59,6 @@ public class Game implements Runnable {
 	public void setRecord(Record record) {
 		this.record = record;
 	}
-
-	public MainFrame getFrame() {
-		return frame;
-	}
-
-	public void setFrame(MainFrame frame) {
-		this.frame = frame;
-	}
-
 
 	@Override
 	public void run() {

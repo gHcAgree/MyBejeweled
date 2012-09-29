@@ -128,19 +128,25 @@ public class MenuView extends BaseView {
 				else if(onButton(classicP,x,y)) {
 					canvas.dispose();
 					changeCursor(false);
-					mainFrame.setView(new ClassicView(mainFrame));
+					ClassicView view = new ClassicView(mainFrame);
+					mainFrame.setView(view);
 					
-					game = new ClassicGame();
+					game = new ClassicGame(view);
 					gameThread = new Thread(game);
+					view.setGameThread(gameThread);
+					view.setGame(game);
 					gameThread.start();
 				}
 				else if(onButton(timeP,x,y)) {
 					canvas.dispose();
 					changeCursor(false);
-					mainFrame.setView(new TimeView(mainFrame));
+					ClassicView view = new TimeView(mainFrame);
+					mainFrame.setView(view);
 					
-					game = new TimeGame();
+					game = new TimeGame(view);
 					gameThread = new Thread(game);
+					view.setGameThread(gameThread);
+					view.setGame(game);
 					gameThread.start();
 				}
 				else if(onButton(levelP,x,y)) {

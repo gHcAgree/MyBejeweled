@@ -1,6 +1,7 @@
 package view;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.SWTException;
 import org.eclipse.swt.graphics.Cursor;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.Image;
@@ -79,4 +80,17 @@ public class BaseView {
 	public void setGame(Game game) {
 		this.game = game;
 	}
+	
+	public Thread getGameThread() {
+		return gameThread;
+	}
+	
+	public void setGameThread(Thread t) {
+		gameThread = t;
+	}
+	
+	public Canvas getCanvas() {
+		return canvas;
+	}
+	
 }
