@@ -1,6 +1,5 @@
 package view;
 
-import model.MyImages;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.*;
@@ -10,8 +9,10 @@ import org.eclipse.swt.graphics.Font;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.graphics.Rectangle;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
+
+import controller.*;
+
+import resources.MyImages;
 
 public class MenuView extends BaseView {
 
@@ -57,40 +58,40 @@ public class MenuView extends BaseView {
 				
 				if(settingRect.contains(x,y)) {
 					gc.drawString("设置选项", 342, 285,true);
-					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+					changeCursor(true);
 				}
 				else if(helpRect.contains(x,y)) {
 					gc.drawString("帮助信息", 342, 285,true);
-					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+					changeCursor(true);
 				}
 				else if(aboutRect.contains(x,y)) {
 					gc.drawString("关于游戏", 342, 285,true);
-					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+					changeCursor(true);
 				}
 				else if(exitRect.contains(x,y)) {
 					gc.drawString("退出游戏", 342, 285,true);
-					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+					changeCursor(true);
 				}
 				   
 				else if(onButton(classicP,x,y)) {
 					gc.drawString("经典模式", 342, 285,true);
-					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+					changeCursor(true);	
 				}
 				else if(onButton(timeP,x,y)) {
 					gc.drawString("时间模式", 342, 285,true);
-					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+					changeCursor(true);
 				}
 				else if(onButton(levelP,x,y)) {
 					gc.drawString("冒险闯关", 342, 285,true);
-					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+					changeCursor(true);	
 				}
 				else if(onButton(onlineP,x,y)) {
 					gc.drawString("联网对战", 342, 285,true);
-					mainFrame.getShell().setCursor(new Cursor(mainFrame.getDisplay(),SWT.CURSOR_HAND));
+					changeCursor(true);	
 				}
 				else {
 					canvas.redraw();
-					mainFrame.getShell().setCursor(null);
+					changeCursor(false);
 				}
 					
 			}
@@ -121,18 +122,26 @@ public class MenuView extends BaseView {
 					
 				}
 				else if(exitRect.contains(x,y)) {
-					mainFrame.getGame().over();
+					System.exit(0);
 				}
 				   
 				else if(onButton(classicP,x,y)) {
 					canvas.dispose();
-					mainFrame.getShell().setCursor(null);
+					changeCursor(false);
 					mainFrame.setView(new ClassicView(mainFrame));
+					
+					game = new ClassicGame();
+					gameThread = new Thread(game);
+					gameThread.start();
 				}
 				else if(onButton(timeP,x,y)) {
 					canvas.dispose();
-					mainFrame.getShell().setCursor(null);
+					changeCursor(false);
 					mainFrame.setView(new TimeView(mainFrame));
+					
+					game = new TimeGame();
+					gameThread = new Thread(game);
+					gameThread.start();
 				}
 				else if(onButton(levelP,x,y)) {
 					
