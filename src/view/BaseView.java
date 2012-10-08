@@ -17,7 +17,6 @@ public class BaseView {
 	protected Image background;
 	protected GC gc;
 	protected MainFrame mainFrame;
-	public static final MyIcons DIAMONDS = new MyIcons();
 	protected int scoreCounter;
 	protected Thread gameThread;
 	protected Thread soundThread;
@@ -26,17 +25,13 @@ public class BaseView {
 	
 	public BaseView(MainFrame mf) {
 		mainFrame = mf;
-		canvas = new Canvas(mf.getShell(),SWT.FILL);
+		canvas = new Canvas(mf.getShell(),SWT.NO_BACKGROUND);    //SWT.DOUBLE_BUFFERED|SWT.NO_BACKGROUND|SWT.NO_REDRAW_RESIZE
 		setSize(MainFrame.WIDTH,MainFrame.HEIGHT);
 		gc = new GC(canvas);
 		scoreCounter = 0;
 		
 		paintComponents();
 		addListeners();
-	}
-	
-	public void setBackground(Image img) {
-		canvas.setBackgroundImage(img);
 	}
 	
 	public void setSize(int w,int h) {
@@ -93,4 +88,7 @@ public class BaseView {
 		return canvas;
 	}
 	
+	public MainFrame getMainFrame() {
+		return mainFrame;
+	}
 }

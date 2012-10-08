@@ -3,6 +3,7 @@ package view;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.events.*;
 
 public class MainFrame {
 	private Display display;
@@ -19,6 +20,14 @@ public class MainFrame {
 		shell.open();
 		
 		view = new MenuView(this);
+		
+		shell.addDisposeListener(new DisposeListener() {  
+		    public void widgetDisposed(DisposeEvent e) {  
+		        display.dispose(); 
+		        view.setGameThread(null);
+		        System.exit(0);  
+		    }  
+		});
 		
 		while (!shell.isDisposed()) {
 		    if (!display.readAndDispatch()) 

@@ -25,10 +25,11 @@ public class MenuView extends BaseView {
 	private Point levelP;
 	private Point onlineP;
 	private int radius;
+	protected Image background;
 	
 	public MenuView(MainFrame mf) {
 		super(mf);
-		setBackground(new Image(mf.getDisplay(),MyImages.DIR+MyImages.MENU));
+		background = new Image(mf.getDisplay(),MyImages.DIR+MyImages.MENU);
 		
 		settingRect = new Rectangle(42,604,140,60);
 		helpRect = new Rectangle(228,637,140,60);
@@ -44,6 +45,15 @@ public class MenuView extends BaseView {
 	
 	@Override
 	public void addListeners() {
+		canvas.addPaintListener(new PaintListener() {
+
+			@Override
+			public void paintControl(PaintEvent arg0) {
+				// TODO Auto-generated method stub
+				gc.drawImage(background,0,0);
+			}
+			
+		});
 		canvas.addMouseMoveListener(new MouseMoveListener() {
 
 			@Override
@@ -53,41 +63,41 @@ public class MenuView extends BaseView {
 				int y = e.y;
 				
 				gc.setFont(new Font(mainFrame.getDisplay(),"楷体",40,SWT.BOLD));
-				gc.setAlpha(50);
+				gc.setAlpha(255);
 				gc.setForeground(new Color(mainFrame.getDisplay(),255,255,255));
 				
 				if(settingRect.contains(x,y)) {
-					gc.drawString("设置选项", 342, 285,true);
-					changeCursor(true);
+					    gc.drawString("设置选项", 342, 285,true);
+					    changeCursor(true);
 				}
 				else if(helpRect.contains(x,y)) {
-					gc.drawString("帮助信息", 342, 285,true);
-					changeCursor(true);
+						gc.drawString("帮助信息", 342, 285,true);
+						changeCursor(true);
 				}
 				else if(aboutRect.contains(x,y)) {
-					gc.drawString("关于游戏", 342, 285,true);
-					changeCursor(true);
+						gc.drawString("关于游戏", 342, 285,true);
+						changeCursor(true);
 				}
 				else if(exitRect.contains(x,y)) {
-					gc.drawString("退出游戏", 342, 285,true);
-					changeCursor(true);
+						gc.drawString("退出游戏", 342, 285,true);
+						changeCursor(true);
 				}
 				   
 				else if(onButton(classicP,x,y)) {
-					gc.drawString("经典模式", 342, 285,true);
-					changeCursor(true);	
+						gc.drawString("经典模式", 342, 285,true);
+						changeCursor(true);	
 				}
 				else if(onButton(timeP,x,y)) {
-					gc.drawString("时间模式", 342, 285,true);
-					changeCursor(true);
+						gc.drawString("时间模式", 342, 285,true);
+						changeCursor(true);
 				}
 				else if(onButton(levelP,x,y)) {
-					gc.drawString("冒险闯关", 342, 285,true);
-					changeCursor(true);	
+						gc.drawString("冒险闯关", 342, 285,true);
+						changeCursor(true);	
 				}
 				else if(onButton(onlineP,x,y)) {
-					gc.drawString("联网对战", 342, 285,true);
-					changeCursor(true);	
+						gc.drawString("联网对战", 342, 285,true);
+						changeCursor(true);	
 				}
 				else {
 					canvas.redraw();
