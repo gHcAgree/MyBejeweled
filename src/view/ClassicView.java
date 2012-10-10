@@ -19,6 +19,9 @@ public class ClassicView extends BaseView {
 	protected int rotateDiamond;
 	protected int rotateIndex;
 	protected boolean onDiamond;
+	protected int selectedFirst;
+	protected boolean showRect;
+	protected boolean showUnswappable;
 	public static final MyIcons DIAMONDS = new MyIcons();
 	protected Image[][] diamonds;
 	protected Image board;
@@ -30,6 +33,7 @@ public class ClassicView extends BaseView {
 	protected Font hintFont;
 	protected Font scoreFont;
 	protected Color foregroundColor;
+	protected Color rectColor;
 
 	public ClassicView(MainFrame mf) {
 		super(mf);
@@ -52,10 +56,14 @@ public class ClassicView extends BaseView {
 		scoreFont = new Font(mainFrame.getDisplay(),"Segoe Print",25,SWT.ITALIC);
 		
 		foregroundColor = new Color(mainFrame.getDisplay(),255,255,255);
+		rectColor = new Color(mainFrame.getDisplay(),255,0,0);
 		
 		rotateDiamond = -1;
 		rotateIndex = 0;
 		onDiamond = false;
+		selectedFirst = -1;
+		showRect = false;
+		showUnswappable = false;
 	}
 	
 	@Override
@@ -90,6 +98,9 @@ public class ClassicView extends BaseView {
 				
 				paintMatrix(tgc);
 				paintScore(tgc);
+				
+				if(showRect)
+					paintRect(tgc);
 				//
 				
 				e.gc.drawImage(image,0,0);
@@ -154,6 +165,25 @@ public class ClassicView extends BaseView {
 					changeCursor(false);
 					mainFrame.setView(new MenuView(mainFrame));
 				}
+				
+				int index = -1;
+				if((index=onDiamondN(x,y))!=-1
+						&&(selectedFirst==-1||(selectedFirst!=-1&&!nearby(selectedFirst,index)))) {
+					selectedFirst = index;
+					showRect = true;
+				}
+				else if((index=onDiamondN(x,y))!=-1
+						&&(selectedFirst!=-1&&nearby(selectedFirst,index)&&!game.swappable())) {
+					selectedFirst = index;
+					showRect = true;
+					showUnswappable = true;
+				}
+				else {
+					selectedFirst = -1;
+					showRect = false;
+					showUnswappable = false;
+				}
+					
 			}
 
 			@Override
@@ -195,19 +225,40 @@ public class ClassicView extends BaseView {
 		gc.drawString(score,738,52,true);
 	}
 	
+	public void paintRect(GC gc) {
+		gc.setForeground(rectColor);
+		int x = selectedFirst%Game.SIZE*64+70;
+		int y = selectedFirst/Game.SIZE*64+70;
+		gc.drawRoundRectangle(x,y,64,64,4,4);
+	}
+	
+	public void paintUnswappable(GC gc) {
+		
+	}
+	
 	protected int onDiamondN(int x,int y) {
 		if(x<70||x>582||y<70||y>582) 
 			return -1;
 		else 
 			return ((y-70)/64)*(Game.SIZE)+(x-70)/64;
 	}
-
+	
+	protected boolean nearby(int f,int s) {
+		if(Math.abs(f-s)==8||Math.abs(f-s)==1)
+			return true;
+		return false;
+	}
+	
 	public int getRotateDiamond() {
 		return rotateDiamond;
 	}
 	
 	public boolean getOnDiamond() {
 		return onDiamond;
+	}
+	
+	public boolean getShowRect() {
+		return showRect;
 	}
 	
 }

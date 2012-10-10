@@ -51,6 +51,16 @@ public class Game implements Runnable {
 	public void setMatrix(int[][] matrix) {
 		this.matrix = matrix;
 	}
+	
+	public void setMatrixItem(int item,int value) {
+		int x = item/SIZE;
+		int y = item%SIZE;
+		matrix[x][y] = value;
+	}
+	
+	public boolean swappable() {
+		return false;
+	}
 
 	public Record getRecord() {
 		return record;
